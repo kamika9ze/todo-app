@@ -6,7 +6,12 @@ import './List.scss';
 import '../Badge/Badge.scss';
 
 
-const List = ({items, isRemovable, onClick }) => {
+const List = ({items, isRemovable, onClick, onRemove }) => {
+    const removeList = (index) => {
+        if (window.confirm('Вы действительно хотите удалить список?')) {
+            onRemove(index);
+        }
+    }
     return (
         <ul onClick={onClick} className="list">
             {items.map((item, index) => (
@@ -21,10 +26,10 @@ const List = ({items, isRemovable, onClick }) => {
                         <span>{item.name}</span>
                         {isRemovable && (
                             <img
+                            onClick={() => removeList(index)}
                             className="list__remove-icon"
                             src={removeSvg}
                             alt="Remove icon"
-                            // onClick={() => removeList(item)}
                             />
                         )}
                     </li>
