@@ -14,19 +14,19 @@ const List = ({items, isRemovable, onClick, onRemove }) => {
     }
     return (
         <ul onClick={onClick} className="list">
-            {items.map((item, index) => (
-                    <li key={index} className={classNames(item.className, {'active' : item.active})}>
+            {items.map((item, id) => (
+                    <li key={id} className={classNames(item.className, {'active' : item.active})}>
                         <i>
                             {item.icon ? (
                                 item.icon
                             ) : (
-                                <Badge color={item.color} />
+                                <Badge color={item.color.name} />
                             )}
                         </i>
                         <span>{item.name}</span>
                         {isRemovable && (
                             <img
-                            onClick={() => removeList(index)}
+                            onClick={() => removeList(id)}
                             className="list__remove-icon"
                             src={removeSvg}
                             alt="Remove icon"

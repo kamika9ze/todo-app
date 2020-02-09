@@ -1,19 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import Axios from 'axios';
+
 import List from '../List/';
 import Badge from '../Badge/';
 
 import closeSvg from '../../assets/img/close.svg';
 import './AddList.scss';
+
 const AddList = ({ colors, onAdd }) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const [seletedColor, selectColor] = useState(colors[0].id);
+    const [seletedColor, selectColor] = useState(3);
     const [inputValue, setInputValue] = useState('');
+
+    useEffect(() => {
+        if(Array.isArray(colors)) {
+            selectColor(colors[0].id);
+        }
+    }, [colors]);
+
     const addList = () => {
         if (!inputValue) {
             alert('Введите название списка');
             return;
         }
         const color = colors.filter(c => c.id === seletedColor)[0].name;
+        Axios.post('http://localhost:3001/lists', {
+            name: inputValue, color
+        })
         onAdd({id: Math.random(), name: inputValue, colorId: seletedColor, color: color});
         onClose();
     };
