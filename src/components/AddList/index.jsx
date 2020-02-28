@@ -23,11 +23,13 @@ const AddList = ({ colors, onAdd }) => {
             alert('Введите название списка');
             return;
         }
-        const color = colors.filter(c => c.id === seletedColor)[0].name;
+        // const color = colors.filter(c => c.id === seletedColor)[0].name;
         Axios.post('http://localhost:3001/lists', {
-            name: inputValue, color
+            name: inputValue, colorId: seletedColor
+        }).then(({data}) => {
+            console.log(data);
         })
-        onAdd({id: Math.random(), name: inputValue, colorId: seletedColor, color: color});
+        // onAdd({id: Math.random(), name: inputValue, colorId: seletedColor, color: color});
         onClose();
     };
 

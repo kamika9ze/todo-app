@@ -34,6 +34,26 @@
       "name": "Курс по ReactJS ToDo",
       "colorId": 7,
       "id": 7
+    },
+    {
+      "name": "sdsdf",
+      "colorId": 1,
+      "id": 8
+    },
+    {
+      "name": "dcsdc",
+      "colorId": 1,
+      "id": 9
+    },
+    {
+      "name": "dfgdf",
+      "colorId": 1,
+      "id": 10
+    },
+    {
+      "name": "erter",
+      "colorId": 1,
+      "id": 11
     }
   ],
   "tasks": [

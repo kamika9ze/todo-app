@@ -14,6 +14,7 @@ function App() {
   // );
   const [lists, setList] = useState(null);
   const [colors, setColors] = useState(null);
+  const [tasks, setTasks] = useState(null);
   useEffect(()=> {
     axios.get('http://localhost:3001/lists?_expand=color').then(({data}) => {
       setList(data);
@@ -21,6 +22,10 @@ function App() {
     axios.get('http://localhost:3001/colors').then(({data}) => {
       setColors(data);
     });
+    axios.get('http://localhost:3001/tasks').then(({data}) => {
+      setTasks(data);
+    });
+    console.log(tasks);
   }, []);
   const onAddList = obj => {
     const newList = [
@@ -59,7 +64,11 @@ function App() {
           
         </div>
         <div className="todo__tasks">
-          <Tasks />
+          {tasks ? (
+          <Tasks tasks={tasks}/>
+          ) : (
+            'Загрузка...'
+          )}
         </div>
     </div>
   );
