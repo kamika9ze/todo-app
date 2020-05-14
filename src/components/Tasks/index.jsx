@@ -9,21 +9,24 @@ import './Tasks.scss';
 // import AddTaskForm from './AddTaskForm';
 // import Task from './Task';
 
-const Tasks = ({tasks}) => {
+const Tasks = ({list}) => {
+  const editTitle = () => {
+    const newTitle = window.prompt('Название списка', list.name);
+  }
 
   return (
     <div className="tasks">
       <h2 className="tasks__title">
-        Фронтенд
-        <img  src={editSvg} alt="Edit icon" />
+        {list.name}
+        <img  src={editSvg} alt="Edit icon" onClick={editTitle} />
       </h2>            
       <div className="tasks__items">
-          <h2>Задачи отсутствуют</h2>
-          {tasks.map((item, id) => (
-            <div className="tasks__items-row" key={id}>
+          {!list.tasks.length && <h2>Задачи отсутствуют</h2>}
+          {list.tasks.map((tasks) => (
+            <div className="tasks__items-row" key={tasks.id}>
               <div className="checkbox">
-                <input type="checkbox" id={id}/>
-                <label className="checkbox" htmlFor={id}>
+                <input type="checkbox" id={`task-${tasks.id}`}/>
+                <label className="checkbox" htmlFor={`task-${tasks.id}`}>
                     <svg
                         width="11"
                         height="8"
@@ -41,7 +44,7 @@ const Tasks = ({tasks}) => {
                     </svg>
                 </label>              
               </div>      
-              <p>{item.text}</p>
+              <p>{tasks.text}</p>
               <div className="tasks__items-row-actions">
                 <div>
                   <svg

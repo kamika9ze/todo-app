@@ -10,6 +10,7 @@ import './AddList.scss';
 const AddList = ({ colors, onAdd }) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [seletedColor, selectColor] = useState(3);
+    const [isLoading, setIsLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
@@ -17,20 +18,23 @@ const AddList = ({ colors, onAdd }) => {
             selectColor(colors[0].id);
         }
     }, [colors]);
-
     const addList = () => {
         if (!inputValue) {
             alert('Введите название списка');
             return;
         }
-        // const color = colors.filter(c => c.id === seletedColor)[0].name;
-        Axios.post('http://localhost:3001/lists', {
+        setIsLoading(true);
+        Axios.post('http://192.168.8.100:3001/lists', {
             name: inputValue, colorId: seletedColor
         }).then(({data}) => {
-            console.log(data);
-        })
-        // onAdd({id: Math.random(), name: inputValue, colorId: seletedColor, color: color});
-        onClose();
+            const color = colors.filter(c => c.id === seletedColor)[0].name;
+            const listObj = { ...data, color: {name: color} };
+            onAdd(listObj);
+            onClose();
+        })         
+        .finally(() => {
+            setIsLoading(false);
+        });
     };
 
     const onClose = () => {
@@ -75,7 +79,9 @@ const AddList = ({ colors, onAdd }) => {
                             ) )
                         }         
                     </div>
-                    <button onClick={addList} className="button">Добавить</button>
+                    <button onClick={addList} className="button">
+                        {isLoading ? 'Добавить...' : 'Добавить'}
+                    </button>
                 </div>
             )}
         </div>
